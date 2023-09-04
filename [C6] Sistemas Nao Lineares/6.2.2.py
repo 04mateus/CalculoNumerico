@@ -1,7 +1,6 @@
 # Sistemas Não Lineares
 # Metodo: Newton Raphson
 # Questão: 2
-# Fellipe Carvalho
 
 
 from math import pi, exp
