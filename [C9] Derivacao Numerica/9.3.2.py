@@ -1,0 +1,45 @@
+# Derivação numérica
+# Gradiente
+
+#importa a biblioteca
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+#resolução da imagem
+x_range = np.arange(-2, 2, 0.2)  # intervalo e quantidade de setas
+y_range = np.arange(-2, 2, 0.2)  # intervalo e quantidade de setas
+x_mesh, y_mesh = np.meshgrid(x_range, y_range)
+# linhas de campo
+E = np.multiply(-x_mesh, np.exp(-(np.power(x_mesh, 2)) - np.power(y_mesh, 2)))
+dy, dx = np.gradient(-E)
+plt.figure(figsize=(10, 10))  # Tamanho
+plt.quiver(x_mesh, y_mesh, -dx, -dy, pivot="middle")  # Setas
+plt.axis("scaled")  # Ajuste automático de escala
+# superfícies equipotenciais geradas pelas duas cargas
+xp = np.arange(-2, 2, 0.1)
+yp = np.arange(-2, 2, 0.1)
+x_mesh, y_mesh = np.meshgrid(xp, yp)
+E = np.multiply(x_mesh, np.exp(-(np.power(x_mesh, 2)) - np.power(y_mesh, 2)))
+d_o = 4
+# laço de repetição
+if (len(E) % 2) != 0:
+    l = int((len(E) + 1) / 2)
+else:
+    l = int((len(E)) / 2)
+niveis = np.linspace(E[l][l - d_o], -E[l][l - d_o], 6)  # niveis interseccões do plano
+eqp = plt.contour(x_mesh, y_mesh, -E, levels=niveis)  # linhas de contorno
+plt.clabel(eqp)
+# posicionamento das duas cargas
+# carga elétrica negativa
+carga_x1 = 0.70
+carga_y1 = 0
+# carga elétrica positiva
+carga_x2 = -0.70
+carga_y2 = 0
+plt.plot(carga_x1, carga_y1, color='blue', marker='o', linestyle='dashed', markersize=7)
+plt.plot(carga_x2, carga_y2, color='red', marker='o', linestyle='dashed', markersize=7)
+plt.title('Campo Elétrico')
+# plt.savefig("Campo_elétrico.png")
+plt.show()
+
